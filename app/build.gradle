@@ -51,7 +51,6 @@ dependencies {
     //instead of check Project level build.gradle for version values
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
 
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     compile "android.arch.lifecycle:runtime:$rootProject.archLifecycleVersion"
@@ -59,11 +58,6 @@ dependencies {
 
     compile "android.arch.persistence.room:runtime:$rootProject.roomLifecycleVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomLifecycleVersion"
-
-
-    testCompile 'org.mockito:mockito-core:2.8.9'
-    testCompile 'junit:junit:4.12'
-
 
     //Butterknife
     compile 'com.jakewharton:butterknife:8.8.1'
