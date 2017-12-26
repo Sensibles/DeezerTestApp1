@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     defaultConfig {
-        applicationId "artur.pl.androidarchitecturetest"
+        applicationId "artur.pl.deezertestapp"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -60,8 +60,6 @@ dependencies {
     compile "android.arch.persistence.room:runtime:$rootProject.roomLifecycleVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomLifecycleVersion"
 
-    compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
-    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
 
     testCompile 'org.mockito:mockito-core:2.8.9'
     testCompile 'junit:junit:4.12'
