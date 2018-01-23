@@ -13,7 +13,7 @@ import artur.pl.deezertestapp.Model.Entity.Track;
 /**
  * Created by artur on 09.12.2017.
  */
-@android.arch.persistence.room.Database(entities = {Artist.class, Album.class, Track.class}, version = 2)
+@android.arch.persistence.room.Database(entities = {Artist.class, Album.class, Track.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ArtistDao artistDao();
     public abstract AlbumDao albumDao();
