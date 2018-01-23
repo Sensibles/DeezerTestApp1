@@ -34,7 +34,8 @@ public class RoomModule {
                 application,
                 AppDatabase.class,
                 "Databse.db"
-        ).build();
+        ).fallbackToDestructiveMigration()  //TODO: This option will drop all tables when version of db will be changed.
+                .build();
     }
 
     @Provides
