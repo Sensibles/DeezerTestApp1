@@ -49,15 +49,32 @@ dependencies {
 
 
     //instead of check Project level build.gradle for version values
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+//    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+//    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+//
+//    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+//    compile "android.arch.lifecycle:runtime:$rootProject.archLifecycleVersion"
+//    compile "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+//
+//    compile "android.arch.persistence.room:runtime:$rootProject.roomLifecycleVersion"
+//    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomLifecycleVersion"
 
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
-    compile "android.arch.lifecycle:runtime:$rootProject.archLifecycleVersion"
-    compile "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.0.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
 
-    compile "android.arch.persistence.room:runtime:$rootProject.roomLifecycleVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomLifecycleVersion"
+    // Room
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    // Paging
+    implementation "android.arch.paging:runtime:1.0.0-alpha4-1"
+
+    // Test helpers for LiveData
+    testImplementation "android.arch.core:core-testing:1.0.0"
+
+    // Test helpers for Room
+    testImplementation "android.arch.persistence.room:testing:1.0.0"
 
     //Butterknife
     compile 'com.jakewharton:butterknife:8.8.1'
