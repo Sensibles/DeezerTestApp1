@@ -4,13 +4,17 @@ import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-
-import junit.framework.Test;
+import android.view.Menu;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -22,13 +26,10 @@ import artur.pl.deezertestapp.Model.Entity.Artist;
 import artur.pl.deezertestapp.Model.Entity.Track;
 import artur.pl.deezertestapp.R;
 import artur.pl.deezertestapp.ViewModel.TestViewModel;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-
-
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -49,6 +50,28 @@ public class MainActivity extends BaseActivity {
             Log.d("QUERY", query);
         }
         ButterKnife.bind(this);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_default, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.search_view) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra("previous_activity", MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -138,11 +161,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.button)
-    public void onClick(){
-        System.out.println("ON SEARCH REQUESTED");
-        onSearchRequested();
-    }
 
     @Override
     public boolean onSearchRequested() {

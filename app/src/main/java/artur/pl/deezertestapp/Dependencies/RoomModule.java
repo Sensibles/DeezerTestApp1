@@ -8,12 +8,15 @@ import javax.inject.Singleton;
 
 import artur.pl.deezertestapp.Model.Dao.AlbumDao;
 import artur.pl.deezertestapp.Model.Dao.ArtistDao;
+import artur.pl.deezertestapp.Model.Dao.HistoryItemDao;
 import artur.pl.deezertestapp.Model.Dao.TrackDao;
 import artur.pl.deezertestapp.Model.Db.AppDatabase;
 import artur.pl.deezertestapp.Model.Entity.Artist;
+import artur.pl.deezertestapp.Model.Entity.HistoryItem;
 import artur.pl.deezertestapp.Model.Entity.Track;
 import artur.pl.deezertestapp.Repository.AlbumRepository;
 import artur.pl.deezertestapp.Repository.ArtistRepository;
+import artur.pl.deezertestapp.Repository.HistoryItemRepository;
 import artur.pl.deezertestapp.Repository.TrackRepository;
 import artur.pl.deezertestapp.Rest.AlbumClient;
 import artur.pl.deezertestapp.Rest.ArtistClient;
@@ -87,10 +90,24 @@ public class RoomModule {
     }
     //
 
+    //HISTORY ITEM
     @Provides
     @Singleton
-    ViewModelProvider.Factory provideViewModelFactory(ArtistRepository artistRepository, AlbumRepository albumRepository, TrackRepository trackRepository){
-        return new CustomViewModelFactory(artistRepository, albumRepository, trackRepository);
+    HistoryItemRepository providesHistoryItemRepository(HistoryItemDao historyItemDao, Application application){
+        return new HistoryItemRepository(application, historyItemDao);
+    }
+
+    @Provides
+    @Singleton
+    HistoryItemDao providesHistoryItemDao(AppDatabase database){
+        return database.historyItemDao();
+    }
+    //
+
+    @Provides
+    @Singleton
+    ViewModelProvider.Factory provideViewModelFactory(ArtistRepository artistRepository, AlbumRepository albumRepository, TrackRepository trackRepository, HistoryItemRepository historyItemRepository){
+        return new CustomViewModelFactory(artistRepository, albumRepository, trackRepository, historyItemRepository);
     }
 
 }

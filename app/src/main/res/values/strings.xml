@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">DeezerTestApp</string>
-    <string name="search_hint">Search hint</string>
+    <string name="search_hint_artist">Szukaj artystów...</string>
+
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_clear_history">Wyczyść historię</string>
+    <string name="search_title">Szukaj...</string>
 </resources>
