@@ -5,4 +5,7 @@
     <string name="action_settings">Ustawienia</string>
     <string name="action_clear_history">Wyczyść historię</string>
     <string name="search_title">Szukaj...</string>
+    <string name="action_favorite">Ulubione</string>
+
+    <string name="button_clear_filter">Powrót do TOP 20</string>
 </resources>

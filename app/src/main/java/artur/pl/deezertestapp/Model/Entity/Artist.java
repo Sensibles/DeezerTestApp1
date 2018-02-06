@@ -17,7 +17,8 @@ public class Artist {
     private String photoUrl;
     private String biography;
     private int numberOfAlbums;
-    private int numberOfFans;   //TODO: TRY TO DOWNLOAD ARRAY OF FANS
+    private int numberOfFans;
+    private boolean favorite;   //We don't want to set value of 'favorite' in constructor because if webservice will update some data, 'favorite' will be overridden.
 
     public Artist(int id, String name, String thumbnailUrl, String photoUrl, String biography, int numberOfAlbums, int numberOfFans) {
         this.id = id;
@@ -43,6 +44,14 @@ public class Artist {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getPhotoUrl() {
@@ -77,11 +86,11 @@ public class Artist {
         this.numberOfFans = numberOfFans;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

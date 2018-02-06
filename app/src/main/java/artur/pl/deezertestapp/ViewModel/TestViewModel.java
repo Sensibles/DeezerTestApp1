@@ -27,33 +27,33 @@ public class TestViewModel extends ViewModel{
         this.trackRepository = trackRepository;
     }
 
-    public LiveData<List<Artist>> getArtistForName(String name){
-        return artistRepository.getArtistForName(name);
-    }
-
-
-    public LiveData<Artist> getArtistForId(int id){
-        return artistRepository.getArtistForId(id);
-    }
-
-    public LiveData<Album> getAlbumForId(int id){
-        return albumRepository.getAlbumForId(id);
-    }
-    public LiveData<List<Album>> getAlbumForArtistId(int id) {
-        albumRepository.deleteAllAlbums();
-        return albumRepository.getAlbumForArtistId(id, "0");
-    }
-
-    public LiveData<Track> getTrackForId(int id){
-        return trackRepository.getTrackForId(id);
-    }
-
-    public LiveData<List<Track>> getTrackForAlbumId(int id) {
-        return  trackRepository.getTrackForAlbumId(id, "0");
-    }
-
-    public LiveData<List<Track>> getTop5TracksForArtistId(int id){
-        return trackRepository.getTop5TrackForArtistId(id);
-    }
+//    public LiveData<List<Artist>> getArtistForName(String name, boolean forceOverride){
+//        return artistRepository.getArtistForName(name);
+//    }
+//
+//
+//    public LiveData<Artist> getArtistForId(int id, boolean forceOverride){
+//        return artistRepository.getArtistForId(id);
+//    }
+//
+//    public LiveData<Album> getAlbumForId(int id){
+//        return albumRepository.getAlbumForId(id);
+//    }
+//    public LiveData<List<Album>> getAlbumForArtistId(int id) {
+//        albumRepository.deleteAllAlbums();
+//        return albumRepository.getAlbumForArtistId(id, "0");
+//    }
+//
+//    public LiveData<Track> getTrackForId(int id){
+//        return trackRepository.getTrackForId(id);
+//    }
+//
+//    public LiveData<List<Track>> getTrackForAlbumId(int id) {
+//        return  trackRepository.getTrackForAlbumId(id, "0");
+//    }
+//
+//    public LiveData<List<Track>> getTop5TracksForArtistId(int id){
+//        return trackRepository.getTop5TrackForArtistId(id);
+//    }
 
 }

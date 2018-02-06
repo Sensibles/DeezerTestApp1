@@ -11,6 +11,11 @@ import java.util.List;
 import artur.pl.deezertestapp.Model.Entity.HistoryItem;
 import artur.pl.deezertestapp.R;
 import artur.pl.deezertestapp.View.Utils.ItemClickListener;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static artur.pl.deezertestapp.Constants.SEARCH_ITEM;
 
 /**
  * Created by artur on 26.01.2018.
@@ -22,18 +27,20 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
     private ItemClickListener itemClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.historyItemTextView)
         public TextView historyItemTextView;
+
         private ItemClickListener itemClickListener;
         public ViewHolder(View v, ItemClickListener itemClickListener) {
             super(v);
             this.itemClickListener = itemClickListener;
-            historyItemTextView = (TextView) v.findViewById(R.id.historyItemTextView);
+            ButterKnife.bind(this, v);
             v.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onItemClick();
+            itemClickListener.onItemClick(SEARCH_ITEM, historyItemTextView.getText().toString());
         }
     }
 

@@ -16,6 +16,8 @@ import artur.pl.deezertestapp.Model.Entity.Album;
 import artur.pl.deezertestapp.Model.Entity.Artist;
 import artur.pl.deezertestapp.Rest.ResponseObject.ArtistResponseObject;
 
+import static artur.pl.deezertestapp.Constants.DEBUG_TAG;
+
 /**
  * Created by artur on 09.12.2017.
  */
@@ -27,6 +29,7 @@ public class ArtistDeserializer implements JsonDeserializer<ArtistResponseObject
             JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         List<Artist> list = new ArrayList<>();
+        Log.d(DEBUG_TAG, jsonObject.toString() );
         //TODO: FIND A BETTER WAY TO EXAMINE WHAT KIND OF JSONRESPONSE IT IS
         /*
         if node 'data' appears in json response, it means that response is from searching request
@@ -38,11 +41,12 @@ public class ArtistDeserializer implements JsonDeserializer<ArtistResponseObject
                       new Artist(
                               tempObject.get("id").getAsInt(),
                               tempObject.get("name").getAsString(),
-                              tempObject.get("picture_small").getAsString(),
+                              tempObject.get("picture_medium").getAsString(),
                               tempObject.get("picture_big").getAsString(),
                               "",
                               tempObject.get("nb_album").getAsInt(),
                               tempObject.get("nb_fan").getAsInt()
+
                       )
                );
 
@@ -52,7 +56,7 @@ public class ArtistDeserializer implements JsonDeserializer<ArtistResponseObject
                     new Artist(
                             jsonObject.get("id").getAsInt(),
                             jsonObject.get("name").getAsString(),
-                            jsonObject.get("picture_small").getAsString(),
+                            jsonObject.get("picture_medium").getAsString(),
                             jsonObject.get("picture_big").getAsString(),
                             "",
                             jsonObject.get("nb_album").getAsInt(),
@@ -60,7 +64,6 @@ public class ArtistDeserializer implements JsonDeserializer<ArtistResponseObject
                     )
             );
         }
-
         return new ArtistResponseObject(list);
     }
 }

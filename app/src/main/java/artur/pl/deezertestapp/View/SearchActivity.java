@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Intent.ACTION_SEARCH;
+import static artur.pl.deezertestapp.Constants.SEARCH_ITEM;
 
 public class SearchActivity extends AppCompatActivity implements ItemClickListener {
     @Inject
@@ -40,6 +41,9 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
     private SearchViewModel searchViewModel;
     private HistoryListAdapter historyListAdapter;
     private LiveData<List<HistoryItem>> historyItemLiveData;
+
+    @BindView(R.id.my_toolbar)
+    Toolbar myToolbar;
 
     @BindView(R.id.historyListRecyclerView)
     RecyclerView historyListRecyclerView;
@@ -54,7 +58,6 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
                 .inject(this);
         ButterKnife.bind(this);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         historyListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -141,10 +144,16 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
     }
 
     @Override
-    public void onItemClick() {
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.setAction(ACTION_SEARCH);
-        intent.putExtra(SearchManager.QUERY, searchView.getQuery().toString());
-        startActivity(intent);
+    public void onItemClick(int code, Object o) {
+        switch (code) {
+            case SEARCH_ITEM:
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setAction(ACTION_SEARCH);
+                intent.putExtra(SearchManager.QUERY, (String) o);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

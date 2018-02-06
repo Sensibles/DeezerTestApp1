@@ -5,5 +5,5 @@ package artur.pl.deezertestapp.View.Utils;
  */
 
 public interface ItemClickListener {
-    void onItemClick();
+    void onItemClick(int code, Object o);
 }
