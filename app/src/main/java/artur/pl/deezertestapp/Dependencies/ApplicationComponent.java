@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import artur.pl.deezertestapp.View.MainActivity;
 import artur.pl.deezertestapp.View.SearchActivity;
+import artur.pl.deezertestapp.View.SearchResultActivity;
 import dagger.Component;
 
 /**
@@ -18,6 +19,7 @@ import dagger.Component;
 public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
     void inject(SearchActivity searchActivity);
+    void inject(SearchResultActivity searchResultActivity);
 
     Application application();
 }

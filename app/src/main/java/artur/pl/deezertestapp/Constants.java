@@ -12,4 +12,9 @@ public class Constants {
 
     //DEBUG
     public static final String DEBUG_TAG = "DTA";
+
+    //SHARED PREFERENCES
+    public static final String SP = "SP";
+    public static final String SP_FORCE_NET = "SP_FORCE_NET";
+    public static final String SP_ENABLE_CACHE = "SP_CACHE_IMG";
 }

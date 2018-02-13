@@ -14,4 +14,84 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <TextView
+        android:id="@+id/settingsCategoryNetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingTop="8dp"
+        android:text="@string/setting_cat_net"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/settingsName1TextView"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Setting name 1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/setting_header"
+        app:layout_constraintEnd_toStartOf="@+id/setting1Switch"
+        app:layout_constraintStart_toStartOf="@+id/settingsCategoryNetTextView"
+        app:layout_constraintTop_toBottomOf="@+id/settingsCategoryNetTextView" />
+
+    <TextView
+        android:id="@+id/settingsDesc1TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Setting description 1"
+        app:layout_constraintEnd_toEndOf="@+id/settingsName1TextView"
+        app:layout_constraintStart_toStartOf="@+id/settingsName1TextView"
+        app:layout_constraintTop_toBottomOf="@+id/settingsName1TextView" />
+
+    <Switch
+        android:id="@+id/setting1Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:thumbTint="@color/colorAccent"
+        android:trackTint="@color/colorAccent"
+        app:layout_constraintTop_toTopOf="@+id/settingsName1TextView" />
+
+    <TextView
+        android:id="@+id/settingsName2TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Setting name 2"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/setting_header"
+        app:layout_constraintEnd_toStartOf="@+id/setting2Switch"
+        app:layout_constraintStart_toStartOf="@+id/settingsName1TextView"
+        app:layout_constraintTop_toBottomOf="@+id/settingsDesc1TextView" />
+
+    <TextView
+        android:id="@+id/settingsDesc2TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Setting description 2"
+        app:layout_constraintEnd_toEndOf="@+id/settingsName2TextView"
+        app:layout_constraintStart_toStartOf="@+id/settingsName2TextView"
+        app:layout_constraintTop_toBottomOf="@+id/settingsName2TextView" />
+
+    <Switch
+        android:id="@+id/setting2Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:thumbTint="@color/colorAccent"
+        android:trackTint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settingsName2TextView" />
+
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import artur.pl.deezertestapp.Constants;
 import artur.pl.deezertestapp.DeezerTestApp;
 import artur.pl.deezertestapp.Model.Entity.Album;
 import artur.pl.deezertestapp.Model.Entity.Artist;
@@ -33,6 +35,7 @@ import artur.pl.deezertestapp.Model.Entity.Track;
 import artur.pl.deezertestapp.R;
 import artur.pl.deezertestapp.View.Utils.Adapters.ArtistListAdapter;
 import artur.pl.deezertestapp.View.Utils.ItemClickListener;
+import artur.pl.deezertestapp.View.Utils.Utils;
 import artur.pl.deezertestapp.ViewModel.ArtistListViewModel;
 import artur.pl.deezertestapp.ViewModel.TestViewModel;
 import butterknife.BindView;
@@ -55,9 +58,8 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
     RecyclerView artistListRecyclerView;
 
     private ArtistListAdapter artistListAdapter;
-    private String query;
-    private LiveData<List<Artist>> firstTwentyArtists, artistsByName;
-
+    private LiveData<List<Artist>> firstTwentyArtists;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
                 .getApplicationComponent()
                 .inject(this);
         ButterKnife.bind(this);
+        sharedPref = getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
         setSupportActionBar(myToolbar);
         setupRecyclerView();
     }
@@ -76,27 +79,27 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
         // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_default, menu);
+        //For tinting icons
+        Utils.tintMenuIcon(MainActivity.this, menu.findItem(R.id.action_favorite), R.color.colorAccent);
+        Utils.tintMenuIcon(MainActivity.this, menu.findItem(R.id.search_view), R.color.colorAccent);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.search_view:
-                Intent intent = new Intent(this, SearchActivity.class);
-                intent.putExtra("previous_activity", MainActivity.class);
-                //     intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
                 break;
-            case android.R.id.home:
-                // API 5+ solution
-                //onBackPressed();
-                setupArtistListResults(true);
-                return true;
+            case R.id.action_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(menuItem);
     }
-
 
 
     @Override
@@ -104,50 +107,21 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
         super.onStart();
         artistListViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ArtistListViewModel.class);
-        setupArtistListResults(false);
+        setupArtistListResults();
     }
 
 
-    private void setupArtistListResults(boolean clearFilter){
-        boolean isSearchQuery = onSearchQuery();
-
-        if(clearFilter) {
-            if(!isSearchQuery)
-                return; //to avoid showing top20, because they are already there.
-            isSearchQuery = !clearFilter;
-        }
-
-        //Unsubscribing unused livedata
-        firstTwentyArtists = artistListViewModel.getFirstTwentyArtist(false);
-        artistsByName = artistListViewModel.getArtistsForName(query, true);
-        if(firstTwentyArtists.hasObservers() && isSearchQuery)
-            firstTwentyArtists.removeObservers(this);
-        if(artistsByName.hasObservers() && !isSearchQuery)
-            artistsByName.removeObservers(this);
-
-        //If there is no data from search activity
-        if(!isSearchQuery) {
-            getSupportActionBar().setTitle(R.string.app_name);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            firstTwentyArtists.observe(this, new Observer<List<Artist>>() {
+    private void setupArtistListResults(){
+        boolean forceNet = sharedPref.getBoolean(Constants.SP_FORCE_NET, false);
+        Log.d(Constants.DEBUG_TAG, "FORCE_NET: " + forceNet);
+        firstTwentyArtists = artistListViewModel.getFirstTwentyArtist(forceNet);
+        firstTwentyArtists.observe(this, new Observer<List<Artist>>() {
                 @Override
                 public void onChanged(@Nullable List<Artist> artists) {
                    MainActivity.this.onChanged(artists);
                 }
             });
         }
-        //If search activity sent query to search for
-        else{
-            getSupportActionBar().setTitle(query);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            artistsByName.observe(this, new Observer<List<Artist>>() {
-                @Override
-                public void onChanged(@Nullable List<Artist> artists) {
-                    MainActivity.this.onChanged(artists);
-                }
-            });
-        }
-    }
 
     public void onChanged(List<Artist> artists){
         if (artists != null) {
@@ -161,22 +135,6 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
     private void setupRecyclerView(){
         artistListRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
-
-    /**
-     *
-     * @return true if query exsists, false if activity ran without action_search and query.
-     */
-    private boolean onSearchQuery(){
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            this.query = query;
-            Log.d("QUERY", query);
-            return true;
-        }
-        return false;
-    }
-
 
     @Override
     protected void setCurrentActivity() {
@@ -196,6 +154,5 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
             default:
                 break;
         }
-
     }
 }

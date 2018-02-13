@@ -92,6 +92,8 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
     }
 
     private void setupObserver(String text){
+        if(historyItemLiveData != null)
+            historyItemLiveData.removeObservers(this);
         historyItemLiveData = searchViewModel.getHistoryItemsForText(text);
         historyItemLiveData.observe(this, new Observer<List<HistoryItem>>() {
             @Override
@@ -118,7 +120,7 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
     private void setupSearchView(Menu menu){
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
-        ComponentName componentName = new ComponentName(this.getApplication(), MainActivity.class);
+        ComponentName componentName = new ComponentName(this.getApplication(), SearchResultActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -147,7 +149,7 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
     public void onItemClick(int code, Object o) {
         switch (code) {
             case SEARCH_ITEM:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, SearchResultActivity.class);
                 intent.setAction(ACTION_SEARCH);
                 intent.putExtra(SearchManager.QUERY, (String) o);
                 startActivity(intent);

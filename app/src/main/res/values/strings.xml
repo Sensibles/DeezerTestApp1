@@ -2,10 +2,20 @@
     <string name="app_name">DeezerTestApp</string>
     <string name="search_hint_artist">Szukaj artystów...</string>
 
+    <!--STRINGS FOR MENU ACTIONS -->
     <string name="action_settings">Ustawienia</string>
     <string name="action_clear_history">Wyczyść historię</string>
     <string name="search_title">Szukaj...</string>
     <string name="action_favorite">Ulubione</string>
 
+    <!-- STRINGS FOR WIDGETS -->
     <string name="button_clear_filter">Powrót do TOP 20</string>
+
+    <!-- STRINGS FOR SETTINGS -->
+    <string name="setting_cat_net">Ustawienia sieci</string>
+    <string name="setting_name_force_net">Zawsze aktualizuj</string>
+    <string name="setting_desc_force_net">Wymusza na aplikacji aktualizację danych za pośrednictwem internetu, <b><u>zawsze</u></b> kiedy jest to możliwe.</string>
+    <string name="setting_name_cashe_pics">Buforuj zdjęcia</string>
+    <string name="setting_desc_cashe_pics">Trzymaj zdjęcia w pamięci podręcznej urządzenia.</string>
+
 </resources>
