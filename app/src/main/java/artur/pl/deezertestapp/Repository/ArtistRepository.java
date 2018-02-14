@@ -42,6 +42,10 @@ public class ArtistRepository {
         this.application = application;
     }
 
+    public LiveData<List<Artist>> getFavoriteArtists(){
+        return artistDao.getFavoriteArtists();
+    }
+
     //Mediators between db source and WebServices
     public MediatorLiveData<List<Artist>> getArtistForIdBetween(final int idStart, final int idStop, final boolean forceOverride){
         final MediatorLiveData<List<Artist>> artistMediatorLiveData = new MediatorLiveData<>();

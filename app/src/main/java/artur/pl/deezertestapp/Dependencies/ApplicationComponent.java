@@ -4,6 +4,7 @@ import android.app.Application;
 
 import javax.inject.Singleton;
 
+import artur.pl.deezertestapp.View.FavoriteActivity;
 import artur.pl.deezertestapp.View.MainActivity;
 import artur.pl.deezertestapp.View.SearchActivity;
 import artur.pl.deezertestapp.View.SearchResultActivity;
@@ -20,6 +21,7 @@ public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
     void inject(SearchActivity searchActivity);
     void inject(SearchResultActivity searchResultActivity);
+    void inject(FavoriteActivity favoriteActivity);
 
     Application application();
 }

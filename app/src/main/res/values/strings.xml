@@ -17,5 +17,7 @@
     <string name="setting_desc_force_net">Wymusza na aplikacji aktualizację danych za pośrednictwem internetu, <b><u>zawsze</u></b> kiedy jest to możliwe.</string>
     <string name="setting_name_cashe_pics">Buforuj zdjęcia</string>
     <string name="setting_desc_cashe_pics">Trzymaj zdjęcia w pamięci podręcznej urządzenia.</string>
+    <string name="setting_name_delay">Opóźnienie</string>
+    <string name="setting_desc_delay">Symuluje opóźnienie mogące powstać podczas pobierania danych za pośrednictwem sieci.</string>
 
 </resources>

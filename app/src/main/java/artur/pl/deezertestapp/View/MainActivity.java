@@ -97,6 +97,10 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_favorite:
+                intent = new Intent(this, FavoriteActivity.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -113,7 +117,6 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
 
     private void setupArtistListResults(){
         boolean forceNet = sharedPref.getBoolean(Constants.SP_FORCE_NET, false);
-        Log.d(Constants.DEBUG_TAG, "FORCE_NET: " + forceNet);
         firstTwentyArtists = artistListViewModel.getFirstTwentyArtist(forceNet);
         firstTwentyArtists.observe(this, new Observer<List<Artist>>() {
                 @Override

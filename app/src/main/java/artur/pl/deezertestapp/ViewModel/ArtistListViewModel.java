@@ -27,6 +27,10 @@ public class ArtistListViewModel extends ViewModel {
         return artistRepository.getArtistsForName(name, forceOverride);
     }
 
+    public LiveData<List<Artist>> getFavoriteArtists(){
+        return artistRepository.getFavoriteArtists();
+    }
+
     public void updateArtist(Artist artist){
         artistRepository.insertOrUpdateArtist(artist);
     }

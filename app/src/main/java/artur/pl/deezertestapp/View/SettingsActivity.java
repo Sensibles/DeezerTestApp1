@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -36,11 +37,20 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.setting2Switch)
     Switch setting2Switch;
 
+    @BindView(R.id.settingsName3TextView)
+    TextView name3TextView;
+
+    @BindView(R.id.settingsDesc3TextView)
+    TextView desc3TextView;
+
+    @BindView(R.id.setting3Spinner)
+    Spinner setting3Spinner;
+
     @BindView(R.id.my_toolbar)
     Toolbar myToolbar;
 
     private boolean forceNet, enableCache;
-    private  SharedPreferences sharedPref;
+    private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
     @Override
@@ -79,6 +89,10 @@ public class SettingsActivity extends AppCompatActivity {
         name2TextView.setText(getText(R.string.setting_name_cashe_pics));
         desc2TextView.setText(getText(R.string.setting_desc_cashe_pics));
         setting2Switch.setChecked(enableCache);
+
+        name3TextView.setText(getText(R.string.setting_name_delay));
+        desc3TextView.setText(getText(R.string.setting_desc_delay));
+        setting2Switch.setChecked(enableCache);
     }
 
     @OnClick(R.id.setting1Switch)
@@ -93,5 +107,9 @@ public class SettingsActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    @OnClick(R.id.setting3Spinner)
+    public void onSetting3Spinner(View v){
+      //  setting3Spinner.get DORÓB TUTAJ TEN DELAY
+    }
 
 }

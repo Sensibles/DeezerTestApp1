@@ -32,6 +32,9 @@ public interface ArtistDao {
     @Query("SELECT * FROM Artist")
     LiveData<List<Artist>> getAllArtists();
 
+    @Query("SELECT * FROM Artist WHERE favorite=1")
+    LiveData<List<Artist>> getFavoriteArtists();
+
     @Insert(onConflict = IGNORE)
     Long insertArtist(Artist artist);
 

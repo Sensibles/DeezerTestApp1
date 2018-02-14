@@ -15,20 +15,24 @@
         <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.SearchActivity"
+        <activity
+            android:name=".View.SearchActivity"
             android:noHistory="true" />
         <activity android:name=".View.SettingsActivity" />
         <activity android:name=".View.SearchResultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_artist" />
         </activity>
+        <activity android:name=".View.FavoriteActivity"></activity>
     </application>
 
 </manifest>

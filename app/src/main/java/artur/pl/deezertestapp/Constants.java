@@ -17,4 +17,5 @@ public class Constants {
     public static final String SP = "SP";
     public static final String SP_FORCE_NET = "SP_FORCE_NET";
     public static final String SP_ENABLE_CACHE = "SP_CACHE_IMG";
+    public static final String SP_DELAY = "SP_DELAY";
 }
