@@ -32,7 +32,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_artist" />
         </activity>
-        <activity android:name=".View.FavoriteActivity"></activity>
+        <activity android:name=".View.FavoriteActivity" />
+        <activity android:name=".View.ArtistDetailActivity"></activity>
     </application>
 
 </manifest>

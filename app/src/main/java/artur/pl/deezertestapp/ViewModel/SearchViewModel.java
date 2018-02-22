@@ -19,10 +19,8 @@ public class SearchViewModel extends ViewModel{
         this.historyItemRepository = historyItemRepository;
     }
 
-    public LiveData<List<HistoryItem>> getHistoryItemsForText(String text){
-        if(text == null || text.isEmpty())
+    public LiveData<List<HistoryItem>> getHistoryItems(){
             return historyItemRepository.getAllHistoryItems();
-        return  historyItemRepository.getHistoryItemsForText(text);
     }
 
     public void insertHistoryItem(HistoryItem historyItem){

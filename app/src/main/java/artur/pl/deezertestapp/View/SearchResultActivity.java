@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import artur.pl.deezertestapp.Constants;
 import artur.pl.deezertestapp.DeezerTestApp;
 import artur.pl.deezertestapp.Model.Entity.Artist;
 import artur.pl.deezertestapp.R;
@@ -29,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static artur.pl.deezertestapp.Constants.ARTIST_FAV;
+import static artur.pl.deezertestapp.Constants.ARTIST_ITEM;
 
 public class SearchResultActivity extends BaseActivity implements ItemClickListener {
 
@@ -90,6 +92,14 @@ public class SearchResultActivity extends BaseActivity implements ItemClickListe
                 if(o instanceof Artist) {
                     Artist artist = (Artist) o;
                     artistListViewModel.updateArtistFav(artist.getId(), !artist.isFavorite());
+                }
+                break;
+            case ARTIST_ITEM:
+                if(o instanceof Artist) {
+                    Artist artist = (Artist) o;
+                    Intent intent = new Intent(this, ArtistDetailActivity.class);
+                    intent.putExtra(Constants.ARTIST_INTENT, artist.getId());
+                    startActivity(intent);
                 }
                 break;
             default:

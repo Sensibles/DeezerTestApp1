@@ -6,4 +6,5 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="artistCardColorText">#FFFFFF</color>
+    <color name="transparentBlack">#88000000</color>
 </resources>

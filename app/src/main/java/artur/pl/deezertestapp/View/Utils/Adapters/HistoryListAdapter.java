@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import artur.pl.deezertestapp.Model.Entity.HistoryItem;
@@ -13,7 +17,6 @@ import artur.pl.deezertestapp.R;
 import artur.pl.deezertestapp.View.Utils.ItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static artur.pl.deezertestapp.Constants.SEARCH_ITEM;
 
@@ -23,7 +26,7 @@ import static artur.pl.deezertestapp.Constants.SEARCH_ITEM;
 
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolder> {
-    private List<HistoryItem> historyItemList;
+    private List<HistoryItem> historyItemList, filteredItemList;
     private ItemClickListener itemClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -47,6 +50,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
     public HistoryListAdapter(List<HistoryItem> historyItemList, ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         this.historyItemList = historyItemList;
+        this.filteredItemList = new ArrayList<>(historyItemList);
     }
 
 
@@ -63,15 +67,29 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
     @Override
     public void onBindViewHolder(HistoryListAdapter.ViewHolder holder, int position) {
-        holder.historyItemTextView.setText(historyItemList.get(position).getText());
+        holder.historyItemTextView.setText(filteredItemList.get(position).getText());
 
     }
 
     @Override
     public int getItemCount() {
-        if(historyItemList == null)
+        if(filteredItemList == null)
             return 0;
-        return historyItemList.size();
+        return filteredItemList.size();
     }
+
+    public void setFilter(final String filter){
+        filteredItemList = new ArrayList<>(historyItemList);
+        if(filter == null || filter.isEmpty())
+            return; // If filter is empty, just return whole history item list as filtered one.
+        CollectionUtils.filter(filteredItemList, new Predicate() {
+            @Override
+            public boolean evaluate(Object o) {
+                return ((HistoryItem) o).getText().startsWith(filter);
+            }
+        });
+    }
+
+
 
 }

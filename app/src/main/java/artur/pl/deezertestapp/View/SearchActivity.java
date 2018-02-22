@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import static android.content.Intent.ACTION_SEARCH;
 import static artur.pl.deezertestapp.Constants.SEARCH_ITEM;
 
-public class SearchActivity extends AppCompatActivity implements ItemClickListener {
+public class SearchActivity extends BaseActivity implements ItemClickListener {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
@@ -61,14 +61,20 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         historyListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         setupViewModel();
     }
+
+    @Override
+    protected void setCurrentActivity() {
+        ((DeezerTestApp) getApplication()).setCurrentActivity(this);
+    }
+
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        setupViewModel();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,25 +97,11 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
         }
     }
 
-    private void setupObserver(String text){
-        if(historyItemLiveData != null)
-            historyItemLiveData.removeObservers(this);
-        historyItemLiveData = searchViewModel.getHistoryItemsForText(text);
-        historyItemLiveData.observe(this, new Observer<List<HistoryItem>>() {
-            @Override
-            public void onChanged(@Nullable List<HistoryItem> historyItems) {
-                if(historyItems != null) {
-                    historyListAdapter = new HistoryListAdapter(historyItems, SearchActivity.this);
-                    historyListRecyclerView.setAdapter(historyListAdapter);
-                }
-            }
-        });
-    }
 
     private void setupViewModel(){
         searchViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(SearchViewModel.class);
-       setupObserver(null);
+       setupObserver();
     }
     /*
         My goal:
@@ -133,10 +125,8 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.length() > 0)
-                    setupObserver(newText);
-                else
-                    setupObserver(null);
+                historyListAdapter.setFilter(newText);
+                historyListAdapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -157,5 +147,20 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
             default:
                 break;
         }
+    }
+
+    private void setupObserver(){
+        if(historyItemLiveData != null)
+            historyItemLiveData.removeObservers(this);
+        historyItemLiveData = searchViewModel.getHistoryItems();
+        historyItemLiveData.observe(this, new Observer<List<HistoryItem>>() {
+            @Override
+            public void onChanged(@Nullable List<HistoryItem> historyItems) {
+                if(historyItems != null) {
+                    historyListAdapter = new HistoryListAdapter(historyItems, SearchActivity.this);
+                    historyListRecyclerView.setAdapter(historyListAdapter);
+                }
+            }
+        });
     }
 }

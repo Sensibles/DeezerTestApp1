@@ -46,6 +46,32 @@ public class ArtistRepository {
         return artistDao.getFavoriteArtists();
     }
 
+    public MediatorLiveData<Artist> getArtistForId(final int id, final boolean forceOverride){
+        final MediatorLiveData<Artist> artistMediatorLiveData = new MediatorLiveData<>();
+        final LiveData<Artist> dbSource = artistDao.getArtistForId(id);
+        artistMediatorLiveData.addSource(dbSource, new Observer<Artist>() {
+
+            @Override
+            public void onChanged(@Nullable Artist artist) {
+                if(artist == null || forceOverride) {
+                    artistMediatorLiveData.removeSource(dbSource);
+
+                        getArtistForIdFromWS(id);
+                    artistMediatorLiveData.addSource(dbSource, new Observer<Artist>() {
+                        @Override
+                        public void onChanged(@Nullable Artist value) {
+                            artistMediatorLiveData.setValue(value);
+                        }
+                    });
+                }
+                else {
+                    artistMediatorLiveData.setValue(artist);
+                }
+            }
+        });
+        return artistMediatorLiveData;
+    }
+
     //Mediators between db source and WebServices
     public MediatorLiveData<List<Artist>> getArtistForIdBetween(final int idStart, final int idStop, final boolean forceOverride){
         final MediatorLiveData<List<Artist>> artistMediatorLiveData = new MediatorLiveData<>();

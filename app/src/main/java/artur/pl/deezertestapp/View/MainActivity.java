@@ -44,6 +44,7 @@ import butterknife.OnClick;
 
 import static artur.pl.deezertestapp.Constants.ARTIST_FAV;
 import static artur.pl.deezertestapp.Constants.ARTIST_ITEM;
+import static artur.pl.deezertestapp.Constants.DEBUG_TAG;
 
 public class MainActivity extends BaseActivity implements ItemClickListener {
 
@@ -128,9 +129,13 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
 
     public void onChanged(List<Artist> artists){
         if (artists != null) {
-            artistListRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-            artistListAdapter = new ArtistListAdapter(artists, MainActivity.this);
-            artistListRecyclerView.setAdapter(artistListAdapter);
+            if(artistListRecyclerView.getAdapter() == null){
+                   artistListRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                    artistListAdapter = new ArtistListAdapter(artists, MainActivity.this);
+                    artistListRecyclerView.setAdapter(artistListAdapter);
+            }
+            else if(artistListAdapter != null)
+                artistListAdapter.setArtistsItemList(artists);
             artistListAdapter.notifyDataSetChanged();
         }
     }
@@ -147,11 +152,20 @@ public class MainActivity extends BaseActivity implements ItemClickListener {
 
     @Override
     public void onItemClick(int code, Object o) {
+        Log.d(DEBUG_TAG, "CODE: "+code+ " NAME: " + ((Artist)o).getName());
         switch(code){
             case ARTIST_FAV:
                 if(o instanceof Artist) {
                     Artist artist = (Artist) o;
                     artistListViewModel.updateArtistFav(artist.getId(), !artist.isFavorite());
+                }
+                break;
+            case ARTIST_ITEM:
+                if(o instanceof Artist) {
+                    Artist artist = (Artist) o;
+                    Intent intent = new Intent(this, ArtistDetailActivity.class);
+                    intent.putExtra(Constants.ARTIST_INTENT, artist.getId());
+                    startActivity(intent);
                 }
                 break;
             default:

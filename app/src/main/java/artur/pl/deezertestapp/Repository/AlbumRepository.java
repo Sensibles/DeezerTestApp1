@@ -3,7 +3,10 @@ package artur.pl.deezertestapp.Repository;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.List;
@@ -13,6 +16,7 @@ import javax.inject.Inject;
 import artur.pl.deezertestapp.DeezerTestApp;
 import artur.pl.deezertestapp.Model.Dao.AlbumDao;
 import artur.pl.deezertestapp.Model.Entity.Album;
+import artur.pl.deezertestapp.Model.Entity.Artist;
 import artur.pl.deezertestapp.Repository.Utils.ProgressDialogAsyncTask;
 import artur.pl.deezertestapp.Rest.AlbumClient;
 import artur.pl.deezertestapp.Rest.ResponseObject.AlbumResponseObject;
@@ -59,7 +63,32 @@ public class AlbumRepository {
         return albumDao.getAlbumForId(id);
     }
 
-    public LiveData<List<Album>> getAlbumForArtistId(final int id, final String index){
+    public MediatorLiveData<List<Album>> getAlbumForArtistId(final int id, final boolean forceOverride){
+        final MediatorLiveData<List<Album>> albumMediatorLiveData = new MediatorLiveData<>();
+        final LiveData<List<Album>> dbSource = albumDao.getAlbumsForArtistId(id);
+        albumMediatorLiveData.addSource(dbSource, new Observer<List<Album>>() {
+
+            @Override
+            public void onChanged(@Nullable List<Album> artists) {
+                if(artists.isEmpty() || forceOverride) {
+                    albumMediatorLiveData.removeSource(dbSource);
+                    getAlbumForArtistIdFromWS(id, "0");
+                    albumMediatorLiveData.addSource(dbSource, new Observer<List<Album>>() {
+                        @Override
+                        public void onChanged(@Nullable List<Album> value) {
+                            albumMediatorLiveData.setValue(value);
+                        }
+                    });
+                }
+                else {
+                    albumMediatorLiveData.setValue(artists);
+                }
+            }
+        });
+        return albumMediatorLiveData;
+    }
+
+    public LiveData<List<Album>> getAlbumForArtistIdFromWS(final int id, final String index){
         Call<AlbumResponseObject> call = client.getAlbumsForArtistId(String.valueOf(id), index);
         call.enqueue(new Callback<AlbumResponseObject>() {
             @Override
@@ -74,7 +103,7 @@ public class AlbumRepository {
                                 "Synchronizacja albumów",
                                 id).execute(Albums);
                         if (!response.body().getNext().isEmpty())
-                            getAlbumForArtistId(id, response.body().getNext());
+                            getAlbumForArtistIdFromWS(id, response.body().getNext());
                     }
                 }
             }

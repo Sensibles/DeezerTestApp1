@@ -41,9 +41,9 @@ public class CustomViewModelFactory implements ViewModelProvider.Factory {
 
         else if (modelClass.isAssignableFrom(ArtistListViewModel.class))
             return (T) new ArtistListViewModel(artistRepository);
-//
-//        else if (modelClass.isAssignableFrom(GitHubRepoListViewModel.class))
-//            return (T) new GitHubRepoListViewModel(gitHubRepoRepository);
+
+        else if (modelClass.isAssignableFrom(ArtistDetailsViewModel.class))
+            return (T) new ArtistDetailsViewModel(artistRepository, albumRepository);
 //
 //        else if (modelClass.isAssignableFrom(AlbumViewModel.class))
 //            return (T) new AlbumViewModel(albumRepository);

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -62,7 +64,8 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onItemClick(ARTIST_ITEM,"");
+            Artist artist = artistListAdapter.artistsItemList.get(getAdapterPosition());
+            itemClickListener.onItemClick(ARTIST_ITEM, artist);
         }
 
         @OnClick(R.id.favouriteImageButton)
@@ -110,10 +113,13 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Vi
         holder.artistTextView.setText(artistsItemList.get(position).getName());
         holder.artistCardView.getLayoutParams().height = getElementHeightByFans(200,450, position);
         if(artistsItemList.get(position).isFavorite())
-            holder.favouriteImageButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.favouriteImageButton.setImageResource(R.drawable.ic_favorite_white_24dp);
+        else
+            holder.favouriteImageButton.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         Glide.with(holder.v)
                 .load(artistsItemList.get(position).getThumbnailUrl())
                 .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.mipmap.ic_launcher)
                         .centerInside())
                 .into(holder.artistBgImageView);
@@ -126,5 +132,15 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Vi
             return 0;
         return artistsItemList.size();
     }
+
+    public List<Artist> getArtistsItemList() {
+        return artistsItemList;
+    }
+
+    public void setArtistsItemList(List<Artist> artistsItemList) {
+        this.artistsItemList = artistsItemList;
+    }
+
+
 
 }

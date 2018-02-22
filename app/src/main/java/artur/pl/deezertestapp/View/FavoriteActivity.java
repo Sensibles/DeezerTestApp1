@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static artur.pl.deezertestapp.Constants.ARTIST_FAV;
+import static artur.pl.deezertestapp.Constants.ARTIST_ITEM;
 
 public class FavoriteActivity extends BaseActivity implements ItemClickListener {
 
@@ -84,11 +86,18 @@ public class FavoriteActivity extends BaseActivity implements ItemClickListener 
 
     @Override
     public void onItemClick(int code, Object o) {
+        Artist artist = (Artist) o;
         switch(code){
             case ARTIST_FAV:
                 if(o instanceof Artist) {
-                    Artist artist = (Artist) o;
                     artistListViewModel.updateArtistFav(artist.getId(), !artist.isFavorite());
+                }
+                break;
+            case ARTIST_ITEM:
+                if(o instanceof Artist) {
+                    Intent intent = new Intent(this, ArtistDetailActivity.class);
+                    intent.putExtra(Constants.ARTIST_INTENT, artist.getId());
+                    startActivity(intent);
                 }
                 break;
             default:
@@ -108,9 +117,13 @@ public class FavoriteActivity extends BaseActivity implements ItemClickListener 
 
     public void onChanged(List<Artist> artists){
         if (artists != null) {
-            artistListRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-            artistListAdapter = new ArtistListAdapter(artists, FavoriteActivity.this);
-            artistListRecyclerView.setAdapter(artistListAdapter);
+            if(artistListRecyclerView.getAdapter() == null){
+                artistListRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                artistListAdapter = new ArtistListAdapter(artists, FavoriteActivity.this);
+                artistListRecyclerView.setAdapter(artistListAdapter);
+            }
+            else if(artistListAdapter != null)
+                artistListAdapter.setArtistsItemList(artists);
             artistListAdapter.notifyDataSetChanged();
         }
     }

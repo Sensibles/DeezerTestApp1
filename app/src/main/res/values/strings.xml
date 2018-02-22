@@ -10,6 +10,11 @@
 
     <!-- STRINGS FOR WIDGETS -->
     <string name="button_clear_filter">Powrót do TOP 20</string>
+    <string name="tv_informations">Informacje</string>
+    <string name="tv_no_albums">Albumy: </string>
+    <string name="tv_no_fans">Fani: </string>
+    <string name="tv_biography">Biografia: </string>
+    <string name="tv_albums">Albumy</string>
 
     <!-- STRINGS FOR SETTINGS -->
     <string name="setting_cat_net">Ustawienia sieci</string>
@@ -20,4 +25,5 @@
     <string name="setting_name_delay">Opóźnienie</string>
     <string name="setting_desc_delay">Symuluje opóźnienie mogące powstać podczas pobierania danych za pośrednictwem sieci.</string>
 
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam felis diam, fringilla eu massa vel, imperdiet consequat nulla. Pellentesque scelerisque turpis diam, ac feugiat dui efficitur sit amet. Vivamus a consequat turpis, et posuere lacus. Praesent elementum suscipit lectus, sed feugiat arcu volutpat vitae. Aliquam erat volutpat. Duis tempus tincidunt tempor. Aenean fermentum mi felis, sit amet semper felis maximus et.</string>
 </resources>

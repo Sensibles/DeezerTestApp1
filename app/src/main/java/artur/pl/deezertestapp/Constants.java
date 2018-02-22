@@ -13,6 +13,9 @@ public class Constants {
     //DEBUG
     public static final String DEBUG_TAG = "DTA";
 
+    //
+    public static final String ARTIST_INTENT = "ARTIST_INTENT";
+
     //SHARED PREFERENCES
     public static final String SP = "SP";
     public static final String SP_FORCE_NET = "SP_FORCE_NET";
